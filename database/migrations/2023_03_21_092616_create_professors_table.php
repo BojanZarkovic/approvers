@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('total_available_hours');
+            $table->float('total_available_hours', 4, 2);
             $table->float('payroll_per_hour', 8, 2);
             $table->integer('total_projects')->nullable();
             $table->integer('office_number')->nullable();
