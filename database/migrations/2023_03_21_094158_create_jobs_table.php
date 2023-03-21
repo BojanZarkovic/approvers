@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->enum('type', ['APPROVER', 'NON_APPROVER', 'SUPER_ADMIN']);
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('employee_type');
+            $table->unsignedBigInteger('employee_id');
+            $table->date('date');
+            $table->float('total_hours', 4, 2);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('jobs');
     }
 };
