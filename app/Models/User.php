@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -34,11 +36,27 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
+     * Get the trader associated with the user.
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function trader(): HasOne
+    {
+        return $this->hasOne(Trader::class);
+    }
+
+    /**
+     * Get the professor associated with the user.
+     */
+    public function professor(): HasOne
+    {
+        return $this->hasOne(Professor::class);
+    }
+
+
+    /**
+     * Get the approvals for the user.
+     */
+    public function approvals(): HasMany
+    {
+        return $this->hasMany(Approval::class);
+    }
 }
