@@ -28,7 +28,6 @@ Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
     Route::put('/approvers/{approverId}', [Approvers::class, 'edit']);
     Route::delete('/approvers/{approverId}', [Approvers::class, 'softDelete']);
 
-
 });
 
 
