@@ -35,7 +35,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/approval', [Approvals::class, 'index']);
 });
 
-
 Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
 
     Route::get('/approvers/{userId}', [Approvers::class, 'get']);
@@ -50,7 +49,7 @@ Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
 
     Route::delete('/jobs/{jobId}', [Jobs::class, 'softDelete']);
 
-    Route::get('/report/{userId}', [Reports::class, 'get']);
+    Route::get('/report', [Reports::class, 'get']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'isApprover']], function () {

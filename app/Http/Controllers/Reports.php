@@ -2,22 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class Reports extends Controller
 {
-    public function get(Request $request, $userId)
+    public function get()
     {
 
-        $user = User::findOrFail($userId);
+        $report = DB::select("SELECT YEAR(subQuery.date) AS year, MONTH(subQuery.date) AS month, sum(subQuery.total_hours * ifnull(subQuery.professorPayroll, subQuery.traderPayroll)) AS payment
+                                                      FROM (SELECT job_id, jobs.date, jobs.total_hours, jobs.employee_id, jobs.employee_type, professors.payroll_per_hour AS professorPayroll, traders.payroll_per_hour AS traderPayroll
+                                                      FROM approvals
+                                                      LEFT JOIN jobs ON jobs.id=approvals.job_id
+                                                      LEFT JOIN professors ON jobs.employee_id=professors.id AND jobs.employee_type='PROFESSOR'
+                                                      LEFT JOIN traders ON jobs.employee_id=traders.id AND jobs.employee_type='TRADER'
+                                                      GROUP BY job_id
+                                                      HAVING SUM(CASE
+                                                                 WHEN approvals.status = 'DISSAPROVED' THEN 1
+                                                                 ELSE 0
+                                                               END)=0) AS subQuery
+                                                      GROUP BY YEAR(subQuery.date), MONTH(subQuery.date)");
 
-        $employee = $user->proffesor ? $user->proffesor : $user->trader;
 
-        $totallyApprovedJobIds = DB::select(DB::raw('SELECT job_id FROM approvals left join jobs on jobs.id=approvals.job_id where jobs.employee_id=' . $employee->id . ' group by job_id HAVING SUM(CASE WHEN approvals.status = "DISSAPROVED" THEN 1 ELSE 0 END)=0;'));
-
-
+        return response()->json([
+            'success' => true,
+            'data' => $report,
+        ]);
     }
 
 }
