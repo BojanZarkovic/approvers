@@ -3,6 +3,7 @@
 use App\Http\Controllers\Approvals;
 use App\Http\Controllers\Employees;
 use App\Http\Controllers\Jobs;
+use App\Http\Controllers\Reports;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth;
@@ -48,6 +49,8 @@ Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
     Route::delete('/employees/{userId}', [Employees::class, 'softDelete']);
 
     Route::delete('/jobs/{jobId}', [Jobs::class, 'softDelete']);
+
+    Route::get('/report/{userId}', [Reports::class, 'get']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'isApprover']], function () {
