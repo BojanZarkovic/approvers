@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->enum('status', ['APPROVED', 'DISSAPROVED']);
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 

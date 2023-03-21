@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Approvers;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,16 @@ use App\Http\Controllers\Auth;
 
 Route::post('/login', [Auth::class, 'login']);
 
+// APPROVERS CRUD, MUST BE SUPER ADMIN TO ACCESS
+Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
+
+    Route::get('/approvers/{userId}', [Approvers::class, 'get']);
+    Route::get('/approvers', [Approvers::class, 'index']);
+    Route::post('/approvers', [Approvers::class, 'create']);
+    Route::put('/approvers/{approverId}', [Approvers::class, 'edit']);
+    Route::delete('/approvers/{approverId}', [Approvers::class, 'softDelete']);
 
 
-// TODO DELETE THIS ROUTE
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 

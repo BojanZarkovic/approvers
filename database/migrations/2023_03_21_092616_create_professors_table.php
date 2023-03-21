@@ -20,7 +20,7 @@ return new class extends Migration
             $table->float('payroll_per_hour', 8, 2);
             $table->integer('total_projects')->nullable();
             $table->integer('office_number')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 

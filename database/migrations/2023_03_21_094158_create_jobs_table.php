@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->float('total_hours', 4, 2);
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 
