@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Employees;
+use App\Http\Controllers\Jobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +25,14 @@ Route::post('/login', [Auth::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/employees', [Employees::class, 'index']);
     Route::get('/employees/{userId}', [Employees::class, 'get']);
+
+    Route::get('/jobs/{jobId}', [Jobs::class, 'get']);
+    Route::get('/jobs', [Jobs::class, 'index']);
+    Route::post('/jobs', [Jobs::class, 'create']);
+
 });
 
 
-// APPROVERS CRUD
 Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
 
     Route::get('/approvers/{userId}', [Approvers::class, 'get']);
@@ -39,12 +44,14 @@ Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
 });
 
 
-
-// EMPLOYEES CRUD
 Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
     Route::post('/employees', [Employees::class, 'create']);
     Route::put('/employees/{userId}', [Employees::class, 'edit']);
     Route::delete('/employees/{userId}', [Employees::class, 'softDelete']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'isSuperAdmin']], function () {
+    Route::delete('/jobs/{jobId}', [Jobs::class, 'softDelete']);
 });
 
 
