@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
 class Reports extends Controller
 {
-    public function get(Request $request)
+    public function get(Request $request, $userId)
     {
 
-        $totallyApprovedJobIds = DB::select(DB::raw('SELECT job_id FROM approvals group by job_id HAVING SUM(CASE WHEN approvals.status = "DISSAPROVED" THEN 1 ELSE 0 END)=0'));
+        $user = User::findOrFail($userId);
+
+        $employee = $user->proffesor ? $user->proffesor : $user->trader;
+
+        $totallyApprovedJobIds = DB::select(DB::raw('SELECT job_id FROM approvals left join jobs on jobs.id=approvals.job_id where jobs.employee_id=' . $employee->id . ' group by job_id HAVING SUM(CASE WHEN approvals.status = "DISSAPROVED" THEN 1 ELSE 0 END)=0;'));
 
 
     }
