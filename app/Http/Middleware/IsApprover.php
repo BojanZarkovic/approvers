@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class IsSuperAdmin
+class IsApprover
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class IsSuperAdmin
     {
         $user = $request->user();
 
-        if ($user->type !== 'SUPER_ADMIN') {
+        if ($user->type !== 'APPROVER') {
             return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
         }
 
