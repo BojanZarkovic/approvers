@@ -24,7 +24,7 @@ class Employees extends Controller
 
     public function get(Request $request, $userId)
     {
-        $employee = User::where('type', 'NON_APPROVER', 'id', $userId)->firstOrFail();
+        $employee = User::where('type', 'NON_APPROVER')->where('id', $userId)->firstOrFail();
 
         return response()->json([
             'success' => true,
