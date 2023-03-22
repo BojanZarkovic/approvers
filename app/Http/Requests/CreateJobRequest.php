@@ -17,7 +17,7 @@ class CreateJobRequest extends FormRequest
         return [
             'employee_id' => ['required', 'integer'],
             'employee_type' => ['required', 'string', Rule::in(['professor', 'trader']),],
-            'date' => ['required', 'date_format:"d/m/Y"|after_or_equal:today'],
+            'date' => ['required', 'date'],
             'hours' => ['required', 'numeric', 'max:24'],
         ];
     }

@@ -34,7 +34,9 @@ class Jobs extends Controller
     public function create(CreateJobRequest $request)
     {
 
-        $employee = $request->employee_type === 'professor' ? Professor::findOrFail($request->employee_id) : Trader::findOrFail($request->employee_id);
+        $user = $request->user();
+
+        $employee = $request->employee_type === 'professor' ? Professor::findOrFail($user->professor->id) : Trader::findOrFail($user->trader->id);
 
         // CHECK AVAILABLE HOURS ON DATE
         $sumOfHoursForEmployeeForDate = Job::where('date', $request->date)->where('employee_type', $request->employee_type)->where('employee_id', $employee->id)->sum('total_hours');
