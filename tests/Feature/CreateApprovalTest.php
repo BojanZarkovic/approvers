@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Models\Job;
 use App\Models\Trader;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CreateJobTest extends TestCase
+class CreateApprovalTest extends TestCase
 {
     use RefreshDatabase;
     /**
@@ -16,18 +17,20 @@ class CreateJobTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->nonApprover()->create();
+        $user = User::factory()->approver()->create();
 
         $trader = Trader::factory()->create([
             'user_id' => $user->id,
         ]);
 
+        $job = Job::factory()->trader()->create([
+            'employee_id' => $trader->id
+        ]);
+
         $response = $this->actingAs($user)
-            ->postJson('/api/jobs', [
-                'employee_id' => $user->id,
-                'employee_type' => 'trader',
-                'date' => '2023-06-11',
-                'hours' => 3,
+            ->postJson('/api/approval', [
+                'job_id' => $job->id,
+                'status' => 'APPROVED',
             ]);
 
         $response->assertStatus(201);
