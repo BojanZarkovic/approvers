@@ -16,7 +16,9 @@ class CreateJobTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->nonApprover()->create();
+        $user = User::factory()->nonApprover()->create([
+            'password' => bcrypt($password = 'password'),
+        ]);
 
         $trader = Trader::factory()->create([
             'user_id' => $user->id,
@@ -26,7 +28,7 @@ class CreateJobTest extends TestCase
             ->postJson('/api/jobs', [
                 'employee_id' => $user->id,
                 'employee_type' => 'trader',
-                'date' => '2023-05-11',
+                'date' => '2023-06-11',
                 'hours' => 3,
             ]);
 

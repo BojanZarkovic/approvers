@@ -77,7 +77,7 @@ class Employees extends Controller
     public function edit(EditEmployeeRequest $request, $userId)
     {
 
-        $user = User::where('type', 'NON_APPROVER', 'id', $userId)->firstOrFail();
+        $user = User::where('type', 'NON_APPROVER')->where('id', $userId)->firstOrFail();
 
         $user->email = $request->email ? $request->email : $user->email;
         $user->password = $request->password ? Hash::make($request->password) : $user->password;
@@ -85,7 +85,7 @@ class Employees extends Controller
         $user->last_name = $request->last_name ? $request->last_name : $user->last_name;
         $user->save();
 
-        $employee =  $user->proffessor ? $this->editProfessor($user->proffessor, $request) : $this->editTrader($user->trader, $request);
+        $employee =  $user->professor ? $this->editProfessor($user->professor, $request) : $this->editTrader($user->trader, $request);
 
         return response()->json([
             'success' => true,
