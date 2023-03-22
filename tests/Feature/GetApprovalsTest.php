@@ -17,9 +17,7 @@ class GetApprovalsTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->nonApprover()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $user = User::factory()->nonApprover()->create();
 
 
         $response = $this->actingAs($user)

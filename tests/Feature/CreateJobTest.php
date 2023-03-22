@@ -16,9 +16,7 @@ class CreateJobTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->nonApprover()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $user = User::factory()->nonApprover()->create();
 
         $trader = Trader::factory()->create([
             'user_id' => $user->id,

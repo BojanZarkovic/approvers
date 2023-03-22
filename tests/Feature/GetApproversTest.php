@@ -15,17 +15,13 @@ class GetApproversTest extends TestCase
      */
     public function test_example(): void
     {
-        $admin = User::factory()->superAdmin()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $admin = User::factory()->superAdmin()->create();
 
-        $approver = User::factory()->approver()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $approver = User::factory()->approver()->create();
 
 
         $response = $this->actingAs($admin)
-            ->get('/api/approvers/');
+            ->get('/api/approvers');
 
         $response->assertStatus(200);
     }

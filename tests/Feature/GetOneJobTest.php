@@ -16,9 +16,7 @@ class GetOneJobTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::factory()->nonApprover()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $user = User::factory()->nonApprover()->create();
 
         $job = Job::factory()->trader()->create();
 

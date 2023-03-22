@@ -15,9 +15,7 @@ class DeleteApproverTest extends TestCase
      */
     public function test_example(): void
     {
-        $admin = User::factory()->superAdmin()->create([
-            'password' => bcrypt($password = 'password'),
-        ]);
+        $admin = User::factory()->superAdmin()->create();
 
         $approver = User::factory()->approver()->create();
 
