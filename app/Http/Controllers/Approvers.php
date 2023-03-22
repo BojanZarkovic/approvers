@@ -50,7 +50,7 @@ class Approvers extends Controller
     public function edit(EditApproverRequest $request, $userId)
     {
 
-        $user = User::where('type', 'APPROVER', 'id', $userId)->firstOrFail();
+        $user = User::where('type', 'APPROVER')->where('id', $userId)->firstOrFail();
 
         $user->email = $request->email ? $request->email : $user->email;
         $user->password = $request->password ? Hash::make($request->password) : $user->password;
@@ -67,7 +67,7 @@ class Approvers extends Controller
     public function softDelete(Request $request, $userId)
     {
 
-        $user = User::where('type', 'APPROVER', 'id', $userId)->firstOrFail();
+        $user = User::where('type', 'APPROVER')->where('id', $userId)->firstOrFail();
         $user->delete();
 
         return response()->json([
