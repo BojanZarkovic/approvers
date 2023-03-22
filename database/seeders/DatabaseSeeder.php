@@ -16,19 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        Approval::factory()
-            ->count(10)
-            ->hasJob()
-            ->hasUser()
-            ->approved()
-            ->create();
 
-        Approval::factory()
-            ->count(10)
-            ->hasJob()
-            ->hasUser()
-            ->nonApproved()
-            ->create();
 
     }
 }

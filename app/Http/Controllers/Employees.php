@@ -114,7 +114,7 @@ class Employees extends Controller
     public function softDelete(Request $request, $userId)
     {
 
-        $user = User::where('type', 'NON_APPROVER', 'id', $userId)->firstOrFail();
+        $user = User::where('type', 'NON_APPROVER')->where('id', $userId)->firstOrFail();
         $user->delete();
 
         return response()->json([
