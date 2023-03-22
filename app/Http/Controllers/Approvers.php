@@ -22,7 +22,7 @@ class Approvers extends Controller
 
     public function get(Request $request, $userId)
     {
-        $approver = User::where('type', 'APPROVER', 'id', $userId)->firstOrFail();
+        $approver = User::where('type', 'APPROVER')->where('id', $userId)->firstOrFail();
 
         return response()->json([
             'success' => true,

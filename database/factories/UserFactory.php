@@ -43,4 +43,13 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function superAdmin(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'SUPER_ADMIN',
+            ];
+        });
+    }
 }
